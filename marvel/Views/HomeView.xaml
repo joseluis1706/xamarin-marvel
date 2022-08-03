@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:services="clr-namespace:marvel.Services"
+    xmlns:viewmodels="clr-namespace:marvel.ViewModels"
+    Title="Personajes Marvel"
+    services:ViewModelLocator.AutoWireViewModel="True"
+    x:Class="marvel.Views.HomeView">
+    <ContentPage.Content>
+        <Grid
+            RowDefinitions="*">
+            <CollectionView
+                VerticalScrollBarVisibility="Never"
+                ItemsSource="{Binding Characters}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="2"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout
+                            Padding="3">
+                            <Frame
+                                HasShadow="False"
+                                Padding="0">
+                                <Grid
+                                    RowDefinitions="*">
+                                    <Image
+                                        Aspect="AspectFill"
+                                        Source="{Binding Thumbnail.FullImagePath}"/>
+                                    <BoxView
+                                        Opacity="0.4"
+                                        Color="Black"/>
+                                    <Label
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Center"
+                                        TextColor="White"
+                                        FontSize="20"
+                                        FontAttributes="Bold"
+                                        Text="{Binding Name}"/>
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding CharacterDetailCommand,
+                                        Source={RelativeSource AncestorType={x:Type viewmodels:HomeViewModel}}}"
+                                                          CommandParameter="{Binding .}"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
